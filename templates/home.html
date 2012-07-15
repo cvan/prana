@@ -102,7 +102,8 @@
 ] %}
 
 {% block content %}
-    <form>
+    <form class="island">
+      <div>
         <h2>Periodically check these URLs:</h2>
         <dl>
             <dt>
@@ -138,9 +139,10 @@
                 </select>
                 <input type="text" class="hidden custom">
                 should match
-                <input type="text" name="header_matches" class="matches"> (regular expression)
+                <input type="text" name="header_matches" class="matches"><span class="custom">(regular expression)</span>
                 <a href="">+ add another</a>
             </dd>
+            <!--
             <dt>
                 <label>Content</label>
             </dt>
@@ -158,6 +160,7 @@
                 <input type="text" name="content"> (regular expression)
                 <a href="">+ add another</a>
             </dd>
+            -->
             <dt>
                 <label>Interval</label>
             </dt>
@@ -175,6 +178,7 @@
             </dd>
         </dl>
         <p><button type="submit">Submit</button></p>
+      </div>
     </form>
 
     <h2>Queued Tasks</h2>
