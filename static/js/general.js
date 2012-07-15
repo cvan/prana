@@ -12,6 +12,10 @@
         // TODO: make everything a string.
         data.status = data.status.toString();
 
+        var frequencyNum = parseInt($form.find('[name=frequency_number]').val(), 10),
+            frequencyUnit = parseInt($form.find('[name=frequency_unit]').val(), 10),
+            frequency = frequencyNum * frequencyUnit;
+
         $('#responses').prepend(
             // TODO: check if everything is satisfied.
             '<tr class="' + (data.status == expectedStatus ? 'good' : 'bad') + '">' +
@@ -33,6 +37,8 @@
             'timestamp': ts,
             'expected': {'status': expectedStatus},
             'actual': {'status': data.status},
+            'frequency': frequency,
+            'form': $form.serializeArray()
         });
         storage.set('responses', JSON.stringify(oldResponses));
     }
@@ -98,11 +104,14 @@
         var $this = $(this),
             formData = $this.serialize(),
             url = $this.find('input[name=url]').val(),
-            expectedStatus = $this.find('[name=status]').val();
+            expectedStatus = $this.find('[name=status]').val(),
+            frequencyNum = parseInt($this.find('[name=frequency_number]').val(), 10),
+            frequencyUnit = parseInt($this.find('[name=frequency_unit]').val(), 10),
+            frequency = frequencyNum * frequencyUnit;
         $this.find('button').attr('disabled', true);
         if ($('input[name=url]').val()) {
             // TODO: First add row, then show status w/ throbber!
-            pool.queueJob('/static/js/task.js', formData, function(msg) {
+            pool.queueJob('/static/js/task.js', {'frequency': frequency, 'data': formData}, function(msg) {
                 done(JSON.parse(msg));
             });
         }
@@ -114,7 +123,7 @@
 
     // TODO: Consider storing the entire contents of responses.
     // TODO: Change <title> when a failure!
-    // TODO: Add ability to clear notifications, empty queue (or delete one), empty logs (or delete one).
+    // TODO: Add ability to clear notifications, empty queue (or edit/delete one), empty logs (or delete one).
     // TODO: Add field for comments/name.
     // TODO: Add ability to stop after X number of failures.
     // TODO: Add timeouts!

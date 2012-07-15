@@ -2,6 +2,8 @@
 
 {% set defaults = {
   'status': '200',
+  'frequency_number': '5',
+  'frequency_unit': '60000',
 } %}
 
 {% set status_choices = [
@@ -91,6 +93,14 @@
   'X-UA-Compatible'
 ] %}
 
+{# TODO: Remove seconds so this isn't abused. Require a value of at least 1! #}
+{% set frequency_choices = [
+  ('1000', 'second'),
+  ('60000', 'minute'),
+  ('3600000', 'hour'),
+  ('86400000', 'day'),
+] %}
+
 {% block content %}
     <form>
         <h2>Periodically check these URLs:</h2>
@@ -106,9 +116,9 @@
             </dt>
             <dd>
                 <select name="status">
-                    <option>-----</option>
+                    <option value="">-----</option>
                     {% for status, label in status_choices %}
-                        <option{% if status == defaults.status %} selected{% endif %} value="{{ status }}">{{ label }}</option>
+                        <option{{ ' selected' if status == defaults.status }} value="{{ status }}">{{ label }}</option>
                     {% endfor %}
                     <option value="[custom]">Custom</option>
                 </select>
@@ -120,7 +130,7 @@
             </dt>
             <dd>
                 <select name="header">
-                    <option>-----</option>
+                    <option value="">-----</option>
                     {% for header in header_choices %}
                         <option value="{{ header.lower() }}">{{ header }}</option>
                     {% endfor %}
@@ -153,10 +163,11 @@
             </dt>
             <dd>
                 Every
-                <input type="text" name="frequency_number" value="5">
+                <input type="text" name="frequency_number" value="{{ defaults.frequency_number }}">
                 <select name="frequency_unit">
-                    {% for interval in ('minute', 'hour', 'day') %}
-                        <option data-singular="{{ interval }}" data-plural="{{ interval + 's' }}">
+                    {% for ms, interval in frequency_choices %}
+                        <option data-singular="{{ interval }}" data-plural="{{ interval + 's' }}"
+                                value="{{ ms }}"{{ ' selected' if ms == defaults.frequency_unit }}>
                             {{ interval + 's' }}
                         </option>
                     {% endfor %}
