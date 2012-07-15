@@ -17,10 +17,16 @@ def fetch():
     content, headers, status = '', {}, 0
     try:
         req = requests.get(url)
-        content, headers, status = req.content, req.headers, req.status_code
+        content = req.content
+        headers = req.headers
+        status = req.status_code
     except Exception, e:
         content = e
-    return jsonify({'content': content, 'headers': headers, 'status': status})
+    return jsonify({
+        'content': content,
+        'headers': headers,
+        'status': status
+    })
 
 
 if __name__ == '__main__':

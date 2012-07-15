@@ -49,9 +49,6 @@
         }
     });
 
-    // TODO: keep track of crap in a queue.
-    // TODO: list when is next item.
-
     $('form').on('submit', function(e) {
         var $this = $(this),
             formData = $this.serializeArray(),
@@ -102,11 +99,18 @@
         e.preventDefault();
     });
 
+    // TODO: keep track of crap in a queue.
+    // TODO: list when is next item.
+
+    // TODO: Consider storing the entire contents of responses.
     // TODO: Change <title> when a failure!
-    // TODO: Add ability to clear notifications, empty queue, empty logs.
+    // TODO: Add ability to clear notifications, empty queue (or delete one), empty logs (or delete one).
     // TODO: Add field for comments/name.
     // TODO: Add ability to stop after X number of failures.
     // TODO: Add timeouts!
     // TODO: Handle UnicodeDecodeErrors in requests responses.
     // TODO: Add ability to follow or not follow redirects.
+    // TODO: Live update timestamps.
+
+    // TODO: Add ability to export to JSON, CSV, or share with a friend.
 })();
