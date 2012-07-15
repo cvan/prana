@@ -117,9 +117,9 @@
             <dd>
                 <select name="status">
                     <option value="">-----</option>
-                    {% for status, label in status_choices %}
+                    {%- for status, label in status_choices %}
                         <option{{ ' selected' if status == defaults.status }} value="{{ status }}">{{ label }}</option>
-                    {% endfor %}
+                    {%- endfor %}
                     <option value="[custom]">Custom</option>
                 </select>
                 <input type="text" class="hidden custom">
@@ -131,9 +131,9 @@
             <dd>
                 <select name="header">
                     <option value="">-----</option>
-                    {% for header in header_choices %}
+                    {%- for header in header_choices %}
                         <option value="{{ header.lower() }}">{{ header }}</option>
-                    {% endfor %}
+                    {%- endfor %}
                     <option value="[custom]">Custom</option>
                 </select>
                 <input type="text" class="hidden custom">
@@ -165,12 +165,12 @@
                 Every
                 <input type="text" name="frequency_number" value="{{ defaults.frequency_number }}">
                 <select name="frequency_unit">
-                    {% for ms, interval in frequency_choices %}
+                    {%- for ms, interval in frequency_choices %}
                         <option data-singular="{{ interval }}" data-plural="{{ interval + 's' }}"
                                 value="{{ ms }}"{{ ' selected' if ms == defaults.frequency_unit }}>
                             {{ interval + 's' }}
                         </option>
-                    {% endfor %}
+                    {%- endfor %}
                 </select>
             </dd>
         </dl>
@@ -191,18 +191,19 @@
         </tbody>
     </table>
 
-    <h2>History</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>URL</th>
-                <th>Expected</th>
-                <th>Actual</th>
-                <th>When</th>
-            </tr>
-        </thead>
-        <tbody id="responses">
-        </tbody>
-    </table>
-
+    <div id="history">
+      <h2>History</h2>
+      <table>
+          <thead>
+              <tr>
+                  <th>URL</th>
+                  <th>Expected</th>
+                  <th>Actual</th>
+                  <th>When</th>
+              </tr>
+          </thead>
+          <tbody id="responses">
+          </tbody>
+      </table>
+    </div>
 {% endblock %}

@@ -60,8 +60,11 @@ input,button {
     -webkit-appearance: none;
 }
 
+html, body {
+    background: #fff;
+}
+
 body {
-    background: #eed;
     color: #333;
     font-family: Helvetica, sans-serif;
     font-size: 16px;
@@ -85,8 +88,13 @@ h2 {
 .good {
     color: green;
 }
+
 .bad {
     color: red;
+}
+
+.hidden {
+    display: none;
 }
 
 p, form, table {
@@ -104,6 +112,13 @@ button[disabled] {
     pointer-events: none;
 }
 
-.hidden {
-    display: none;
+#history {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    max-height: 300px;
+    overflow: auto;
+}
+
+th {
+    background: #eff;
 }

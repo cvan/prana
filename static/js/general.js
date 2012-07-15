@@ -54,8 +54,8 @@
             $('#responses').append(
                 '<tr class="' + (value.expected.status == value.actual.status ? 'good' : 'bad') + '">' +
                 '<td>' + value.url + '</td>' +
-                '<td>status:' + value.expected.status + '</td>' +
-                '<td>status:' + value.actual.status + '</td>' +
+                '<td>' + value.expected.status + '</td>' +
+                '<td>' + value.actual.status + '</td>' +
                     '<td><time datetime="' + ts.toISOString() + '" title="' + ts.toString() + '">' +
                         humaneDate(ts) +
                     '</time></td>' +

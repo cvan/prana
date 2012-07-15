@@ -1,19 +1,33 @@
+{% set CSS = [
+    'style.css',
+] -%}
+{% set JS = [
+    'capabilities.js',
+    'storage.js',
+    'humanedate.js',
+    'workers.js',
+    'general.js',
+] -%}
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="robots" content="none">
+        {%- for stylesheet in CSS %}
+        <link rel="stylesheet" media="all" href="{{ url_for('static', filename='css/' + stylesheet) }}">
+        {%- endfor %}
         <title>Prana</title>
     </head>
     <body>
-    <div id="content">
+        <div id="content">
             <h1 class="vt">Prana</h1>
             {% block content %}{% endblock %}
         </div>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        {%- for script in JS %}
+        <script type="text/javascript" src="{{ url_for('static', filename='js/' + script) }}"></script>
+        {%- endfor %}
     </body>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/capabilities.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/storage.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/humanedate.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/workers.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/general.js') }}"></script>
 </html>
