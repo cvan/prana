@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form>
+        <h2>Periodically check these URLs:</h2>
+        <p>
+            <input type="text" name="url">
+            should return a
+            <input type="text" name="status">
+            response code
+        </p>
+        <p><button type="submit">Submit</button></p>
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>URL</th>
+                <th>Expected</th>
+                <th>Actual</th>
+            </tr>
+        </thead>
+        <tbody id="responses">
+        </tbody>
+    </table>
+{% endblock %}
