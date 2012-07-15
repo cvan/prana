@@ -1,6 +1,46 @@
 (function() {
+    function done(data) {
+        var ts = new Date(),
+            $form = $('form'),
+            url = $form.find('input[name=url]').val(),
+            expectedStatus = $form.find('[name=status]').val();
+        $form.find('button').removeAttr('disabled');
+        // TODO: use escape_.
+        // TODO: live update the timestamps.
+        // TOOD: use pyquery.
+
+        // TODO: make everything a string.
+        data.status = data.status.toString();
+
+        $('#responses').prepend(
+            // TODO: check if everything is satisfied.
+            '<tr class="' + (data.status == expectedStatus ? 'good' : 'bad') + '">' +
+                '<td>' + url + '</td>' +
+                '<td>' + expectedStatus + '</td>' +
+                '<td>' + data.status + '</td>' +
+                '<td><time datetime="' + ts.toISOString() + '" title="' + ts.toString() + '">' +
+                    humaneDate(ts) +
+                '</time></td>' +
+            '</tr>'
+        );
+
+        // TODO: support indexedDB.
+        var inMem = localStorage.getItem('responses'),
+            oldResponses = inMem ? JSON.parse(inMem) : [];
+        // Prepend so items are in descending order by timestamp.
+        oldResponses.unshift({
+            'url': url,
+            'timestamp': ts,
+            'expected': {'status': expectedStatus},
+            'actual': {'status': data.status},
+        });
+        storage.set('responses', JSON.stringify(oldResponses));
+    }
+
     var storage = Storage(),
-        inMem = localStorage.getItem('responses');
+        inMem = localStorage.getItem('responses'),
+        pool = WorkerPool(3);
+
     if (inMem) {
         var oldResponses = JSON.parse(inMem);
         $.each(oldResponses, function(index, value) {
@@ -49,54 +89,24 @@
         }
     });
 
+    if ($('input[name=url]').val()) {
+        $('form').find('button').removeAttr('disabled');
+    }
+
     $('form').on('submit', function(e) {
+        e.preventDefault();
         var $this = $(this),
-            formData = $this.serializeArray(),
+            formData = $this.serialize(),
             url = $this.find('input[name=url]').val(),
             expectedStatus = $this.find('[name=status]').val();
         $this.find('button').attr('disabled', true);
-        if (!$('input[name=url]').val()) {
-            return;
-        }
-        console.log(formData);
-
-        // TODO: First add row, then show status w/ throbber!
-
-        $.getJSON('/fetch', formData, function(data) {
-            var ts = new Date();
-            $this.find('button').removeAttr('disabled');
-            // TODO: use escape_.
-            // TODO: live update the timestamps.
-            // TOOD: use pyquery.
-
-            // TODO: make everything a string.
-            data.status = data.status.toString();
-
-            $('#responses').prepend(
-                // TODO: check if everything is satisfied.
-                '<tr class="' + (data.status == expectedStatus ? 'good' : 'bad') + '">' +
-                    '<td>' + url + '</td>' +
-                    '<td>' + expectedStatus + '</td>' +
-                    '<td>' + data.status + '</td>' +
-                    '<td><time datetime="' + ts.toISOString() + '" title="' + ts.toString() + '">' +
-                        humaneDate(ts) +
-                    '</time></td>' +
-                '</tr>'
-            );
-
-            // TODO: support indexedDB.
-            var inMem = localStorage.getItem('responses'),
-                oldResponses = inMem ? JSON.parse(inMem) : [];
-            // Prepend so items are in descending order by timestamp.
-            oldResponses.unshift({
-                'url': url,
-                'timestamp': ts,
-                'expected': {'status': expectedStatus},
-                'actual': {'status': data.status},
+        if ($('input[name=url]').val()) {
+            // TODO: First add row, then show status w/ throbber!
+            pool.queueJob('/static/js/task.js', formData, function(msg) {
+                done(JSON.parse(msg));
             });
-            storage.set('responses', JSON.stringify(oldResponses));
-        });
-        e.preventDefault();
+        }
+        return;
     });
 
     // TODO: keep track of crap in a queue.
