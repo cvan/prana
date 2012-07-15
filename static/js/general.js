@@ -59,6 +59,9 @@
                     '<td><time datetime="' + ts.toISOString() + '" title="' + ts.toString() + '">' +
                         humaneDate(ts) +
                     '</time></td>' +
+                '<td>' + (value.expected.status == value.actual.status ? 'Good' : 'Bad') + '</td>' +
+                '<td></td>' +
+                '<td></td>' +
                 '</tr>'
             );
         })
@@ -118,6 +121,21 @@
         return;
     });
 
+    var $btns = $('header .button');
+    $btns.on('click', function(e) {
+        e.preventDefault();
+        var $this = $(this),
+            cls = null;
+        if ($this.hasClass('good')) {
+            cls = 'good';
+        } else if ($this.hasClass('bad')) {
+            cls = 'bad';
+        }
+        $btns.removeClass('selected');
+        $this.addClass('selected');
+        $('#responses').attr('class', cls);
+    });
+
     // TODO: keep track of crap in a queue.
     // TODO: list when is next item.
 
@@ -132,4 +150,6 @@
     // TODO: Live update timestamps.
 
     // TODO: Add ability to export to JSON, CSV, or share with a friend.
+
+    // TODO(important): Notify me when [SUCCEEDS] or [FAILS].
 })();

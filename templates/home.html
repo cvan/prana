@@ -191,19 +191,29 @@
         </tbody>
     </table>
 
+    <h2>History</h2>
     <div id="history">
-      <h2>History</h2>
-      <table>
-          <thead>
-              <tr>
-                  <th>URL</th>
-                  <th>Expected</th>
-                  <th>Actual</th>
-                  <th>When</th>
-              </tr>
-          </thead>
-          <tbody id="responses">
-          </tbody>
-      </table>
+        <header>
+            <a href="#" class="button selected">All</a>
+            <a href="#" class="button good">Successes</a>
+            <a href="#" class="button bad">Failures</a>
+        </header>
+        <div class="inner">
+            <table>
+                <thead>
+                    <tr>
+                      <th>URL</th>
+                      <th>Expected</th>
+                      <th>Actual</th>
+                      <th>When</th>
+                      <th>Status</th>
+                      <th class="hidden-text">Edit</th>
+                      <th class="hidden-text">Delete</th>
+                    </tr>
+                </thead>
+                <tbody id="responses">
+                </tbody>
+            </table>
+        </div>
     </div>
 {% endblock %}

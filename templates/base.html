@@ -21,10 +21,12 @@
         <title>Prana</title>
     </head>
     <body>
-        <div id="content">
-            <h1 class="vt">Prana</h1>
+        <header id="site-header">
+            <h1>Prana</h1>
+        </header>
+        <section id="content">
             {% block content %}{% endblock %}
-        </div>
+        </section>
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         {%- for script in JS %}
         <script type="text/javascript" src="{{ url_for('static', filename='js/' + script) }}"></script>
