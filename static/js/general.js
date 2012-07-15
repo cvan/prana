@@ -35,11 +35,14 @@
         var $select = $(this),
             $hidden = $select.siblings('input.custom');
         if ($select.val() == '[custom]') {
-            $hidden.attr('name', $select.attr('name')).show().focus();
             $select.attr('data-old-name', $select.attr('name')).removeAttr('name');
+            $hidden.attr('name', $select.attr('name')).show().focus();
+            $hidden.siblings('.custom').show();
         } else {
-            $select.attr('name', $select.data('old-name')).show().focus();
+            $select.attr('name', $select.data('old-name')).show();
+            $select.siblings('input.matches').focus();
             $hidden.removeAttr('name').hide();
+            $hidden.siblings('.custom').hide();
         }
     });
 
@@ -67,6 +70,8 @@
                 '<td>' + data.status + '</td>' +
                 '</tr>'
             );
+
+            // TODO: support indexedDB.
             var inMem = localStorage.getItem('responses'),
                 oldResponses = inMem ? JSON.parse(inMem) : [];
             oldResponses.push({'url': url, 'expected': {'status': expectedStatus}, 'actual': {'status': data.status}});
