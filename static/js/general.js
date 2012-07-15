@@ -14,6 +14,35 @@
             );
         })
     }
+
+    // Because grammar matters.
+    $('input[name=frequency_number]').on('change keyup paste', function() {
+        var $this = $(this),
+            val = parseInt($this.val(), 10),
+            cls = val == 1 ? 'singular' : 'plural',
+            $units = $('select[name=frequency_unit]');
+        if (!$units.hasClass(cls)) {
+            $units.find('option').each(function(index, value) {
+                var $option = $(value);
+                $option.text($option.data(cls));
+            });
+            $units.attr('class', cls);
+        }
+    });
+
+    // Expose input fields for custom values.
+    $('select').on('change keyup', function() {
+        var $select = $(this),
+            $hidden = $select.siblings('input.custom');
+        if ($select.val() == '[custom]') {
+            $hidden.attr('name', $select.attr('name')).show().focus();
+            $select.attr('data-old-name', $select.attr('name')).removeAttr('name');
+        } else {
+            $select.attr('name', $select.data('old-name')).show().focus();
+            $hidden.removeAttr('name').hide();
+        }
+    });
+
     $('form').on('submit', function(e) {
         var $this = $(this),
             formData = $this.serializeArray(),
@@ -46,5 +75,3 @@
         e.preventDefault();
     });
 })();
-
-// todo: store in localstorage

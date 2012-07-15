@@ -1,14 +1,108 @@
 {% extends 'base.html' %}
 
+{% set response_headers = [
+  'Accept-Ranges',
+  'Age',
+  'Allow',
+  'Cache-Control',
+  'Connection',
+  'Content-Encoding',
+  'Content-Language',
+  'Content-Length',
+  'Content-Location',
+  'Content-MD5',
+  'Content-Disposition',
+  'Content-Range',
+  'Content-Type',
+  'Date',
+  'ETag',
+  'Expires',
+  'Front-End-Https',
+  'Last-Modified',
+  'Link',
+  'Location',
+  'P3P',
+  'Pragma',
+  'Proxy-Authenticate',
+  'Refresh',
+  'Retry-After',
+  'Server',
+  'Set-Cookie',
+  'Strict-Transport-Security',
+  'Trailer',
+  'Transfer-Encoding',
+  'Vary',
+  'Via',
+  'Warning',
+  'WWW-Authenticate',
+  'X-Frame-Options',
+  'X-XSS-Protection',
+  'X-Content-Type-Options',
+  'X-Forwarded-Proto',
+  'X-Powered-By',
+  'X-UA-Compatible'
+] %}
+
 {% block content %}
     <form>
         <h2>Periodically check these URLs:</h2>
-        <p>
-            <input type="text" name="url">
-            should return a
-            <input type="text" name="status">
-            response code
-        </p>
+        <dl>
+            <dt>
+                URL
+            </dt>
+            <dd>
+                <input type="text" name="url">
+            </dd>
+            <dt>
+                Status code
+            </dt>
+            <dd>
+                <input type="text" name="url"> (regular expression)
+            </dd>
+            <dt>
+                Header
+            </dt>
+            <dd>
+                <select name="header">
+                    <option>-----</option>
+                    {% for header in response_headers %}
+                        <option value="{{ header.lower() }}">{{ header }}</option>
+                    {% endfor %}
+                    <option value="[custom]">Custom</option>
+                </select>
+                <input type="text" class="hidden custom">
+                should match
+                <input type="text" name="url"> (regular expression)
+            </dd>
+            <dt>
+                Content
+            </dt>
+            <dd>
+                should match (regular expression)
+                <textarea type="text" name="content"></textarea>
+            </dd>
+            <dt>
+                PyQuery of content
+            </dt>
+            <dd>
+                <input type="text" name="content_raw"> should match
+                <input type="text" name="content"> (regular expression)
+            </dd>
+            <dt>
+                Interval/Frequency
+            </dt>
+            <dd>
+                Every
+                <input type="text" name="frequency_number">
+                <select name="frequency_unit">
+                    {% for interval in ('minute', 'hour', 'day') %}
+                        <option data-singular="{{ interval }}" data-plural="{{ interval + 's' }}">
+                            {{ interval }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </dd>
+        </dl>
         <p><button type="submit">Submit</button></p>
     </form>
     <table>
