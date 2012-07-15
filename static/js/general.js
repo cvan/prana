@@ -4,12 +4,15 @@
     if (inMem) {
         var oldResponses = JSON.parse(inMem);
         $.each(oldResponses, function(index, value) {
-            console.log(value.url, value.expected.status, value.actual.status);
+            var ts = new Date(Date.parse(value.timestamp));
             $('#responses').append(
                 '<tr class="' + (value.expected.status == value.actual.status ? 'good' : 'bad') + '">' +
                 '<td>' + value.url + '</td>' +
                 '<td>status:' + value.expected.status + '</td>' +
                 '<td>status:' + value.actual.status + '</td>' +
+                    '<td><time datetime="' + ts.toISOString() + '" title="' + ts.toString() + '">' +
+                        humaneDate(ts) +
+                    '</time></td>' +
                 '</tr>'
             );
         })
@@ -46,37 +49,64 @@
         }
     });
 
+    // TODO: keep track of crap in a queue.
+    // TODO: list when is next item.
+
     $('form').on('submit', function(e) {
         var $this = $(this),
             formData = $this.serializeArray(),
             url = $this.find('input[name=url]').val(),
-            expectedStatus = $this.find('input[name=status]').val();
-        console.log(formData);
+            expectedStatus = $this.find('[name=status]').val();
         $this.find('button').attr('disabled', true);
+        if (!$('input[name=url]').val()) {
+            return;
+        }
+        console.log(formData);
+
+        // TODO: First add row, then show status w/ throbber!
+
         $.getJSON('/fetch', formData, function(data) {
+            var ts = new Date();
             $this.find('button').removeAttr('disabled');
             // TODO: use escape_.
-            // TODO: add timestamps.
+            // TODO: live update the timestamps.
             // TOOD: use pyquery.
 
             // TODO: make everything a string.
             data.status = data.status.toString();
 
-            $('#responses').append(
+            $('#responses').prepend(
                 // TODO: check if everything is satisfied.
                 '<tr class="' + (data.status == expectedStatus ? 'good' : 'bad') + '">' +
-                '<td>' + url + '</td>' +
-                '<td>' + expectedStatus + '</td>' +
-                '<td>' + data.status + '</td>' +
+                    '<td>' + url + '</td>' +
+                    '<td>' + expectedStatus + '</td>' +
+                    '<td>' + data.status + '</td>' +
+                    '<td><time datetime="' + ts.toISOString() + '" title="' + ts.toString() + '">' +
+                        humaneDate(ts) +
+                    '</time></td>' +
                 '</tr>'
             );
 
             // TODO: support indexedDB.
             var inMem = localStorage.getItem('responses'),
                 oldResponses = inMem ? JSON.parse(inMem) : [];
-            oldResponses.push({'url': url, 'expected': {'status': expectedStatus}, 'actual': {'status': data.status}});
+            // Prepend so items are in descending order by timestamp.
+            oldResponses.unshift({
+                'url': url,
+                'timestamp': ts,
+                'expected': {'status': expectedStatus},
+                'actual': {'status': data.status},
+            });
             storage.set('responses', JSON.stringify(oldResponses));
         });
         e.preventDefault();
     });
+
+    // TODO: Change <title> when a failure!
+    // TODO: Add ability to clear notifications, empty queue, empty logs.
+    // TODO: Add field for comments/name.
+    // TODO: Add ability to stop after X number of failures.
+    // TODO: Add timeouts!
+    // TODO: Handle UnicodeDecodeErrors in requests responses.
+    // TODO: Add ability to follow or not follow redirects.
 })();

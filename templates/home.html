@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 
+{% set defaults = {
+  'status': '200',
+} %}
+
 {% set status_choices = [
   ('100', '100 Continue'),
   ('101', '101 Switching Protocols'),
@@ -95,7 +99,7 @@
                 URL
             </dt>
             <dd>
-                <input type="text" name="url">
+                <input type="text" name="url" required>
             </dd>
             <dt>
                 Status code
@@ -104,7 +108,7 @@
                 <select name="status">
                     <option>-----</option>
                     {% for status, label in status_choices %}
-                        <option value="{{ status }}">{{ label }}</option>
+                        <option{% if status == defaults.status %} selected{% endif %} value="{{ status }}">{{ label }}</option>
                     {% endfor %}
                     <option value="[custom]">Custom</option>
                 </select>
@@ -125,6 +129,7 @@
                 <input type="text" class="hidden custom">
                 should match
                 <input type="text" name="header_matches" class="matches"> (regular expression)
+                <a href="">+ add another</a>
             </dd>
             <dt>
                 Content
@@ -132,9 +137,10 @@
             <dd>
                 should match (regular expression)
                 <textarea type="text" name="content"></textarea>
+                <a href="">+ add another</a>
             </dd>
             <dt>
-                PyQuery of content
+                PyQuery/JSON of content
             </dt>
             <dd>
                 <p>Rules:</p>
@@ -165,6 +171,7 @@
                 <th>URL</th>
                 <th>Expected</th>
                 <th>Actual</th>
+                <th>When</th>
             </tr>
         </thead>
         <tbody id="responses">
