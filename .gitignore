@@ -1,0 +1,11 @@
+*.py[co]
+*.sw[po]
+pip-log.txt
+.DS_Store
+*-min.css
+*-all.css
+*-min.js
+*-all.js
+*.less.css
+.nose*
+tmp/*
