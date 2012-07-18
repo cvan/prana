@@ -107,16 +107,16 @@
         <h2>Periodically check these URLs:</h2>
         <dl>
             <dt>
-                <label>URL</label>
+                <label for="url">URL</label>
             </dt>
             <dd>
-                <input type="text" name="url" required>
+                <input type="text" name="url" id="url" required>
             </dd>
             <dt>
-                <label>Status code</label>
+                <label id="status">Status code</label>
             </dt>
             <dd>
-                <select name="status">
+                <select name="status" id="status">
                     <option value="">-----</option>
                     {%- for status, label in status_choices %}
                         <option{{ ' selected' if status == defaults.status }} value="{{ status }}">{{ label }}</option>
@@ -127,10 +127,10 @@
                 <span class="custom">(regular expression)</span>
             </dd>
             <dt>
-                <label>Header</label>
+                <label id="header">Header</label>
             </dt>
             <dd>
-                <select name="header">
+                <select name="header" id="header">
                     <option value="">-----</option>
                     {%- for header in header_choices %}
                         <option value="{{ header.lower() }}">{{ header }}</option>
@@ -162,11 +162,11 @@
             </dd>
             -->
             <dt>
-                <label>Interval</label>
+                <label id="frequency_number">Interval</label>
             </dt>
             <dd>
                 Every
-                <input type="text" name="frequency_number" value="{{ defaults.frequency_number }}">
+                <input type="text" name="frequency_number" id="frequency_number" value="{{ defaults.frequency_number }}">
                 <select name="frequency_unit">
                     {%- for ms, interval in frequency_choices %}
                         <option data-singular="{{ interval }}" data-plural="{{ interval + 's' }}"
