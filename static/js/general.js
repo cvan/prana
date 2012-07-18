@@ -152,4 +152,5 @@
     // TODO: Add ability to export to JSON, CSV, or share with a friend.
 
     // TODO(important): Notify me when [SUCCEEDS] or [FAILS].
+    // TODO: Check that URL is well formed.
 })();

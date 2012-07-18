@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div id="good" style="width: 66.6666%" class="col-2">
+      <h2>Good</h2>
+      <ol>
+        <li>
+          <!--<div class="icon" style="background-image:url(http://www.elasticsearch.org/images/set3/bonsai2.png)"></div>-->
+          <div class="icon" style="background-image:url(http://www.google.com/s2/favicons?domain=elasticsearch.org)"></div>
+          <p>
+            <h3>ElasticSearch</h3>
+            <a href="#" class="url">https://addons.mozilla.org/search/</a>
+          </p>
+          Last run: <time>8 minutes ago</time>
+          Next run: <time>2 minutes</time> (every ten minutes)
+          <a href="#" class="pause">Pause</a>
+          <a href="#" class="pause">History</a>
+          <a href="#" class="info">Info</a>
+          <a href="#" class="edit">Edit</a>
+        </li>
+        <li>
+          <!--<div class="icon" style="background-image:url(http://localhost:8000/media/img/mkt/logos/64.png)"></div>-->
+          <div class="icon" style="background-image:url(http://www.google.com/s2/favicons?domain=marketplace.mozilla.org)"></div>
+          <p>
+            <h3>Marketplace</h3>
+            <a href="#" class="url">http://localhost:8000/</a>
+          </p>
+          Last run: <time>6 minutes ago</time>
+          Next run: <time>54 minutes</time> (every hour)
+          <a href="#" class="pause">Pause</a>
+          <a href="#" class="pause">History</a>
+          <a href="#" class="info">Info</a>
+          <a href="#" class="edit">Edit</a>
+        </li>
+      </ol>
+    </div>
+    <div id="bad" style="width:33.3333%" class="col-1">
+      <h2>Bad</h2>
+      <ol>
+          <li>
+            <!--<div class="icon" style="background-image:url(https://static-ssl-cdn.addons.mozilla.net/media/img/app-icons/med/firefox.png?b=c70eed9)"></div>-->
+            <div class="icon" style="background-image:url(http://www.google.com/s2/favicons?domain=mozilla.org)"></div>
+            <p>
+              <h3>Add-ons</h3>
+              <a href="#" class="url">http://localhost:8000/en-US/</a>
+            </p>
+            Last run: <time>8 minutes ago</time>
+            Next run: <time>22 minutes</time> (every 30 minues)
+            <a href="#" class="pause">Pause</a>
+            <a href="#" class="pause">History</a>
+            <a href="#" class="info">Info</a>
+            <a href="#" class="edit">Edit</a>
+          </li>
+        </ol>
+    </div>
+{% endblock %}

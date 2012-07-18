@@ -10,6 +10,11 @@ def home():
     return render_template('home.html')
 
 
+@app.route('/dashboard')
+def dashboard():
+    return render_template('dashboard.html')
+
+
 # TODO: Ratelimit.
 @app.route('/fetch', methods=['GET', 'POST'])
 def fetch():

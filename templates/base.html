@@ -1,5 +1,5 @@
 {% set CSS = [
-    'style.css',
+    'dark.less.css',
 ] -%}
 {% set JS = [
     'capabilities.js',
@@ -16,10 +16,6 @@
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="robots" content="none">
         <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lato:100,300,400,700,400italic,900,300">
-        <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Fresca">
-        <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Montserrat">
-        <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Abril+Fatface">
-        <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Old+Standard+TT:400,700,400italic">
         <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700">
         {%- for stylesheet in CSS %}
         <link rel="stylesheet" type="text/css" media="all" href="{{ url_for('static', filename='css/' + stylesheet) }}">
@@ -30,6 +26,12 @@
         <header id="site-header">
             <h1>Prana</h1>
         </header>
+        <nav role="navigation">
+            <a href="#" class="add">Add Service</a>
+            <a href="#" class="successes">:)</a>
+            <a href="#" class="failures">:(</a>
+            <a href="#" class="pause">Pause All</a>
+        </nav>
         <section id="content">
             {% block content %}{% endblock %}
         </section>
