@@ -114,9 +114,27 @@
         $this.find('button').attr('disabled', true);
         if ($('input[name=url]').val()) {
             // TODO: First add row, then show status w/ throbber!
-            pool.queueJob('/static/js/task.js', {'frequency': frequency, 'data': formData}, function(msg) {
-                done(JSON.parse(msg));
-            });
+            //pool.queueJob('/static/js/task.js', {'frequency': frequency, 'data': formData}, function(msg) {
+            //    done(JSON.parse(msg));
+            //});
+            var data = {'frequency': frequency, 'data': formData};
+            // The XHR could take longer than the interval to complete so
+            // `setInterval` is out of the question.
+            var timeoutID, request;
+            (function loop() {
+                timeoutID = setTimeout(function() {
+                    request = new XMLHttpRequest();
+                    request.open('GET', '/fetch?' + data.data, false);
+                    request.send();
+                    done(JSON.parse(request.responseText));
+                    if (request.status !== 200) {
+                        clearInterval(intVal);
+                        return;
+                    }
+                    // Recurse.
+                    loop();
+                }, data.frequency);
+            })();
         }
         return;
     });
