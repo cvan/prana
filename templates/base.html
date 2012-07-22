@@ -26,11 +26,13 @@
         <header id="site-header">
             <h1>Prana</h1>
         </header>
-        <nav role="navigation">
-            <a href="#" class="add">Add Service</a>
-            <a href="#" class="successes">:)</a>
-            <a href="#" class="failures">:(</a>
-            <a href="#" class="pause">Pause All</a>
+        <nav class="c" role="navigation">
+            <ul>
+                <li><a href="#" class="add">+</a></li>
+                <li><a href="#" class="successes">&#9786;</a></li>
+                <li><a href="#" class="failures">&#9785;</a></li>
+                <li class="pause"><a href="#" class="pause"></a></li>
+            </ul>
         </nav>
         <section id="content">
             {% block content %}{% endblock %}
