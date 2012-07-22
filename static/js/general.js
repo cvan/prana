@@ -121,20 +121,22 @@
             // The XHR could take longer than the interval to complete so
             // `setInterval` is out of the question.
             var timeoutID, request;
-            (function loop() {
+            (function loop($) {
                 timeoutID = setTimeout(function() {
-                    request = new XMLHttpRequest();
-                    request.open('GET', '/fetch?' + data.data, false);
-                    request.send();
-                    done(JSON.parse(request.responseText));
-                    if (request.status !== 200) {
-                        clearInterval(intVal);
-                        return;
+                    if (!$('.paused').length) {
+                        request = new XMLHttpRequest();
+                        request.open('GET', '/fetch?' + data.data, false);
+                        request.send();
+                        done(JSON.parse(request.responseText));
+                        if (request.status !== 200) {
+                            clearInterval(intVal);
+                            return;
+                        }
                     }
                     // Recurse.
-                    loop();
+                    loop($);
                 }, data.frequency);
-            })();
+            })($);
         }
         return;
     });
@@ -153,6 +155,22 @@
         $this.addClass('selected');
         $('#responses').attr('class', cls);
     });
+
+    var $navBtns = $('nav a');
+    $navBtns.on('click', function(e) {
+        e.preventDefault();
+        var $this = $(this),
+            cls = null;
+        if ($this.hasClass('paused')) {
+            $this.removeClass('paused');
+        } else if ($this.hasClass('pause')) {
+            $this.addClass('paused');
+        } else {
+            $navBtns.removeClass('selected');
+            $this.addClass('selected');
+        }
+    });
+
 
     // TODO: keep track of crap in a queue.
     // TODO: list when is next item.
