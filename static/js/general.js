@@ -80,7 +80,7 @@
             });
             $units.attr('class', cls);
         }
-    });
+    }).trigger('change');
 
     // Expose input fields for custom values.
     $('select').on('change keyup', function() {
@@ -96,7 +96,7 @@
             $hidden.removeAttr('name').hide();
             $hidden.siblings('.custom').hide();
         }
-    });
+    }).trigger('change');
 
     if ($('input[name=url]').val()) {
         $('form').find('button').removeAttr('disabled');

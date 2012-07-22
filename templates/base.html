@@ -164,8 +164,8 @@
                     </dt>
                     <dd class="c">
                         <span>Every</span>
-                        <input type="text" name="frequency_number" id="frequency_number" value="{{ defaults.frequency_number }}">
-                        <select name="frequency_unit">
+                        <input type="number" name="frequency_number" id="frequency_number" min="1" value="{{ defaults.frequency_number }}" required>
+                        <select name="frequency_unit" required>
                             {%- for ms, interval in frequency_choices %}
                                 <option data-singular="{{ interval }}" data-plural="{{ interval + 's' }}"
                                         value="{{ ms }}"{{ ' selected' if ms == defaults.frequency_unit }}>
