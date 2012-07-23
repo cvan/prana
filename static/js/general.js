@@ -126,6 +126,15 @@
             // The XHR could take longer than the interval to complete so
             // `setInterval` is out of the question.
             var timeoutID, request;
+            if (!$('.paused').length) {
+                request = new XMLHttpRequest();
+                request.open('GET', '/fetch?' + data.data, false);
+                request.send();
+                done(JSON.parse(request.responseText));
+                if (request.status !== 200) {
+                    return;
+                }
+            }
             (function loop($) {
                 timeoutID = setTimeout(function() {
                     if (!$('.paused').length) {
