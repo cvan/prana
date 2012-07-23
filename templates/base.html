@@ -143,13 +143,13 @@
                         <label for="url">URL</label>
                     </dt>
                     <dd class="c">
-                        <input type="text" name="url" id="url" required>
+                        <input type="text" name="url" id="url" required class="large">
                     </dd>
                     <dt>
                         <label for="status">Status code</label>
                     </dt>
                     <dd class="c">
-                        <select name="status" id="status">
+                        <select name="status" id="status" class="large">
                             <option value="">-----</option>
                             {%- for status, label in status_choices %}
                                 <option{{ ' selected' if status == defaults.status }} value="{{ status }}">{{ label }}</option>
@@ -186,6 +186,7 @@
                 <a href="#" class="button selected">All</a>
                 <a href="#" class="button good">Successes</a>
                 <a href="#" class="button bad">Failures</a>
+                <a href="#" class="button clear">Clear</a>
             </header>
             <div class="inner">
                 <table>

@@ -1,4 +1,9 @@
 (function() {
+    $(document).on('clearHistory', function() {
+        localStorage.removeItem('responses');
+        $('#responses').html('');
+    });
+
     function done(data) {
         var ts = new Date(),
             $form = $('form'),
@@ -151,8 +156,12 @@
         } else if ($this.hasClass('bad')) {
             cls = 'bad';
         }
-        $btns.removeClass('selected');
-        $this.addClass('selected');
+        if ($this.hasClass('clear')) {
+            $(document).trigger('clearHistory');
+        } else {
+            $btns.removeClass('selected');
+            $this.addClass('selected');
+        }
         $('#responses').attr('class', cls);
     });
 
