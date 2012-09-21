@@ -10,12 +10,31 @@ def home():
     return render_template('home.html')
 
 
-@app.route('/dashboard')
-def dashboard():
-    return render_template('dashboard.html')
+@app.route('/notify', methods=['GET', 'POST'])
+def notify():
+    to_email = []
+    to_sms = []
+    recipients = request.args.get('to', '').split(',')
+    for to in recipients:
+        to = to.strip()
+        if to:
+            if '@' in to:
+                to_email.append(to)
+            else:
+                to_sms.append(''.join(filter(lambda x: x.isdigit(), to)))
+    for email in to_email:
+        print 'emailed %s' % email
+    for sms in to_sms:
+        print 'texted %s' % sms
+    return jsonify({
+        'success': True
+    })
 
 
 # TODO: Ratelimit.
+# TODO: Limit to X pages per IP address.
+# TODO: Limit to X pages per recipient.
+# TODO: Limit to X pages per X time.
 @app.route('/fetch', methods=['GET', 'POST'])
 def fetch():
     url = request.args.get('url', '')
@@ -35,4 +54,4 @@ def fetch():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=3000)
