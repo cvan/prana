@@ -1,0 +1,2 @@
+[28953] 22 Sep 18:50:33 # Warning: no config file specified, using the default config. In order to specify a config file use 'redis-server /path/to/redis.conf'
+[28953] 22 Sep 18:50:33 # Opening port: bind: Address already in use

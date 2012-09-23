@@ -39,13 +39,19 @@
         <header>
             <h1>Prana</h1>
         </header>
-        <form>
+        <form action="{{ url_for('notify') }}" method="post">
             <dl>
                 <dt>
                     <label for="url">Web Site</label>
                 </dt>
                 <dd class="c">
                     <input type="text" name="url" id="url" required class="large">
+                </dd>
+                <dt>
+                    <label for="to">Contact me at</label>
+                </dt>
+                <dd class="c">
+                    <input type="text" name="to" id="to" required class="large">
                 </dd>
                 <dt>
                     <label for="frequency_number">Interval</label>

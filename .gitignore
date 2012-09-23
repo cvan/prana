@@ -9,3 +9,5 @@ pip-log.txt
 *.less.css
 .nose*
 tmp/*
+settings_*.py
+*.yml
