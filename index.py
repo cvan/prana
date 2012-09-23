@@ -28,11 +28,6 @@ def home():
     return render_template('home.html')
 
 
-@app.route('/poop')
-def poop():
-    return render_template('home.html')
-
-
 # TODO: Ratelimit.
 # TODO: Limit to X pages per IP address.
 # TODO: Limit to X pages per recipient.
@@ -50,7 +45,7 @@ def notify():
         interval_number = int(request.form.get('frequency_number', 0))
         interval_unit = int(request.form.get('frequency_unit', 0))
         interval = interval_number * interval_unit
-    except ValueError:
+    except (KeyError, ValueError):
         interval = 5 * 60  # 5 minutes
 
     for to in recipients:
