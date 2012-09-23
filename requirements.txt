@@ -2,4 +2,5 @@ flask
 jinja2
 requests
 redis
-huey
+rq
+rq-dashboard
